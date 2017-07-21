@@ -311,7 +311,7 @@ def main(unused_argv):
     val_feed = {x: val_x, y: val_y, keep_prob: 1.}
     val_xent = sess.run(accuracy, feed_dict=val_feed)
     print("After %d training step(s)", FLAGS.train_steps)
-    print("Accuracy :",  % val_xent)
+    print("Accuracy : %f" % val_xent)
 
 
 if __name__ == "__main__":
