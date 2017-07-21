@@ -308,7 +308,7 @@ def main(unused_argv):
 
     # Validation feed
     accuracy_arr = []
-    nt = 4
+    nt = 5
     for counter in range(1,nt+1):
       val_x, val_y = mnist.validation.next_batch(1000)
       val_feed = {x: val_x, y: val_y, keep_prob: 1.}
