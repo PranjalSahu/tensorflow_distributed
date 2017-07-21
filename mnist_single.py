@@ -89,23 +89,17 @@ def conv_net(x, weights, biases, dropout):
 
 if __name__ == '__main__':
 	# Construct model
-	print('pranjal9')
 	pred = conv_net(x, weights, biases, keep_prob)
-	print('pranjal0')
 	# Define loss and optimizer
 	cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
 	optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
-	print('pranjal1')
 	# Evaluate model
 	correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
-	print('pranjal2')
 	accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 	# Initializing the variables
 	init = tf.initialize_all_variables()
-	print('pranjal3')
 	# Launch the graph
 	start_time = time.time()
-	print('pranjal4')
 	train_flag =  1 # Make this flag  as 1 for training
 	with tf.Session() as sess:
 	    sess.run(init)
