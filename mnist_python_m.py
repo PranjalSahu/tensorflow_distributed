@@ -287,7 +287,7 @@ def main(unused_argv):
     while True:
       # Training feed
       batch_xs, batch_ys = mnist.train.next_batch(FLAGS.batch_size)
-      train_feed = {x: batch_xs, y_: batch_ys}
+      train_feed = {x: batch_xs, y: batch_ys, keep_prob: 0.75}
 
       _, step = sess.run([train_step, global_step], feed_dict=train_feed)
       local_step += 1
