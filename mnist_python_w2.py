@@ -65,10 +65,10 @@ flags.DEFINE_integer("replicas_to_aggregate", 2,
                      "num_workers)")
 flags.DEFINE_integer("hidden_units", 100,
                      "Number of units in the hidden layer of the NN")
-flags.DEFINE_integer("train_steps", 40,
+flags.DEFINE_integer("train_steps", 4,
                      "Number of (global) training steps to perform")
 flags.DEFINE_integer("batch_size", 128, "Training batch size")
-flags.DEFINE_float("learning_rate", 0.001, "Learning rate")
+flags.DEFINE_float("learning_rate", 0.01, "Learning rate")
 flags.DEFINE_boolean("sync_replicas", True,
                      "Use the sync_replicas (synchronized replicas) mode, "
                      "wherein the parameter updates from workers are aggregated "
@@ -307,11 +307,18 @@ def main(unused_argv):
     print("Training elapsed time: %f s" % training_time)
 
     # Validation feed
-    val_x, val_y = mnist.validation.next_batch(100)
-    val_feed = {x: val_x, y: val_y, keep_prob: 1.}
-    val_xent = sess.run(accuracy, feed_dict=val_feed)
-    print("After %d training step(s)", FLAGS.train_steps)
-    print("Accuracy : %f" % val_xent)
+    accuracy_arr = []
+    nt = 4
+    for counter in range(1,nt+1):
+      val_x, val_y = mnist.validation.next_batch(1000)
+      val_feed = {x: val_x, y: val_y, keep_prob: 1.}
+      val_xent = sess.run(accuracy, feed_dict=val_feed)
+      print("After %d training step(s)", FLAGS.train_steps)
+      print("Accuracy : %f" % val_xent)
+      accuracy_arr.append(val_xent)
+    mean_accuracy = sum(accuracy_arr)/len(accuracy_arr)
+    print("Mean Accuracy : %f" % mean_accuracy)
+
 
 
 if __name__ == "__main__":
