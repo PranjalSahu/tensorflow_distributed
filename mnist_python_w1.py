@@ -203,6 +203,8 @@ def main(unused_argv):
 
     # Define loss and optimizer
     cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
+    correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
+    accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
     opt  = tf.train.AdamOptimizer(FLAGS.learning_rate)
 
     if FLAGS.sync_replicas:
@@ -307,9 +309,9 @@ def main(unused_argv):
     # Validation feed
     val_x, val_y = mnist.validation.next_batch(100)
     val_feed = {x: val_x, y: val_y, keep_prob: 1.}
-    val_xent = sess.run(cross_entropy, feed_dict=val_feed)
-    print("After %d training step(s), validation cross entropy = %g" %
-          (FLAGS.train_steps, val_xent))
+    val_xent = sess.run(accuracy, feed_dict=val_feed)
+    print("After %d training step(s)", FLAGS.train_steps)
+    print("Accuracy :",  % val_xent)
 
 
 if __name__ == "__main__":
