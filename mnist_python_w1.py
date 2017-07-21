@@ -305,7 +305,7 @@ def main(unused_argv):
     print("Training elapsed time: %f s" % training_time)
 
     # Validation feed
-    val_feed = {x: mnist.validation.images, y: mnist.validation.labels}
+    val_feed = {x: mnist.validation.images, y: mnist.validation.labels, keep_prob: 1.}
     val_xent = sess.run(cross_entropy, feed_dict=val_feed)
     print("After %d training step(s), validation cross entropy = %g" %
           (FLAGS.train_steps, val_xent))
